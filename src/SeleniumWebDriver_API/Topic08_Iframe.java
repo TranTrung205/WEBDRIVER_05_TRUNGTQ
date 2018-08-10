@@ -37,6 +37,11 @@ public class Topic08_Iframe {
 			driver.switchTo().frame(notificationIframe.get(3));
 			driver.findElement(By.xpath("//*[@id='div-close']")).click();
 		}
+		
+		WebElement loofkingForIframe = driver.findElement(By.xpath(""));
+		driver.switchTo().frame(loofkingForIframe);
+		
+		String lookingForText = driver.findElement(By.xpath(""));
 
 	}
 
