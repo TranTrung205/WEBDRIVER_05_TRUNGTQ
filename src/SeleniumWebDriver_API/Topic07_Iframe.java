@@ -1,6 +1,7 @@
 package SeleniumWebDriver_API;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -16,7 +17,6 @@ import org.testng.annotations.Test;
 
 public class Topic07_Iframe {
 	WebDriver driver;
-	
 
 	@BeforeClass
 	public void beforeClass() {
@@ -25,8 +25,9 @@ public class Topic07_Iframe {
 		driver.manage().window().maximize();
 
 	}
-
-	@Test()
+	
+	//Iframe Handle
+	@Test(enabled = false)
 	public void TestScript01() {
 		driver.get("https://www.hdfcbank.com/");
 		List<WebElement> popupMessageframe = driver
@@ -54,19 +55,43 @@ public class Topic07_Iframe {
 		WebDriverWait wait = new WebDriverWait(driver, 5);
 		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(bannerImagesXpath));
 		driver.switchTo().defaultContent();
-		
-		Assert.assertEquals(driver.findElement(By.xpath("//div[@class='flipBanner']")).isDisplayed(),true);
+
+		Assert.assertEquals(driver.findElement(By.xpath("//div[@class='flipBanner']")).isDisplayed(), true);
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@class='flipBanner']")).isDisplayed());
-		
-		List<WebElement> flipBannerImages = driver.findElements(By.xpath("//div[@class='flipBanner']//img[@class='front icon']"));
+
+		List<WebElement> flipBannerImages = driver
+				.findElements(By.xpath("//div[@class='flipBanner']//img[@class='front icon']"));
 		int flipBannerImagesNumer = flipBannerImages.size();
 		Assert.assertEquals(flipBannerImagesNumer, 8);
 		int i = 0;
-		for(WebElement image: flipBannerImages) {
+		for (WebElement image : flipBannerImages) {
 			Assert.assertTrue(image.isDisplayed());
 			i++;
 			System.out.println("Image" + i + "displayed");
 		}
+		driver.close();
+	}
+
+	// Windows Handle
+	@Test
+	public void TestScript02() {
+		driver.get("http://daominhdam.890m.com/");
+		String parentID = driver.getWindowHandle();
+		driver.findElement(By.xpath("//a[contains(text(),'Click Here')]")).click();
+
+		Set<String> allWindows = driver.getWindowHandles();
+		for (String runWindow : allWindows) {
+			driver.switchTo().window(runWindow);
+			String currentWindow = driver.getTitle();
+			if(currentWindow.equals("Google")) {
+				break;
+			}
+		}
+		String googleWindow = driver.getTitle();
+		Assert.assertEquals(googleWindow, "Google");
+		driver.close();
+		driver.switchTo().window(parentID);
+
 	}
 
 	@AfterClass
