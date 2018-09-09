@@ -1,12 +1,9 @@
 package SeleniumWebDriver_API;
 
-import java.util.Random;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -17,6 +14,8 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import com.google.common.base.Function;
 
 public class Topic10_WAITS {
 	WebDriver driver;
@@ -33,7 +32,7 @@ public class Topic10_WAITS {
 
 	}
 
-	@Test
+	@Test (enabled = false)
 	public void TC01_ImplicitWait() {
 
 		// Step 01 - Truy cập vào
@@ -51,7 +50,7 @@ public class Topic10_WAITS {
 		Assert.assertEquals(text, "Hello World!");
 	}
 
-	@Test
+	@Test (enabled = false)
 	public void TC02_ExplicitWait() {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		// Step 01 - Truy cập vào trang:
@@ -83,7 +82,7 @@ public class Topic10_WAITS {
 
 	}
 
-	
+	@Test
 	public void TC03_FluentWait() {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		// Step 01 - Truy cập vào trang:
